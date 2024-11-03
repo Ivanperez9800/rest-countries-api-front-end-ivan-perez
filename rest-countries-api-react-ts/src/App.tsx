@@ -1,22 +1,27 @@
-import Banner from "./components/Banner/Banner"
-import './app.css'
-import CountryList from "./components/Cards/CountryList"
-// import InputSearch from "./components/Input/InputSearch"
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Menu from './Menu';
+
+import './App.css';
+import CountrieInfo from './components/CountrieInfo';
+import Banner from './components/Banner/Banner';
+
+const App: React.FC = () => {
 
 
 
-function App() {
-
-  
   return (
     <>
-      <Banner />
-      <div className="container">
-      
-      <CountryList/>
-      </div>
+        <Banner />
+        <Router>
+      <Routes>
+        <Route path="/" element={<Menu />} />
+        <Route path="/:countrieId" element={<CountrieInfo />} />
+      </Routes>
+    </Router>
     </>
-  )
-}
 
-export default App
+  );
+};
+
+export default App;

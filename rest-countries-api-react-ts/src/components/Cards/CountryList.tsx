@@ -1,54 +1,31 @@
-import React, { useEffect, useState } from 'react'
-import { Country } from '../../utils/Country.interface';
+import React from 'react'
 import CountryCard from './CountryCard';
 import InputSearch from '../Input/InputSearch';
+import { useAppContext } from '../../hooks/UseContextApp';
+import { Link } from 'react-router-dom';
 
 const CountryList: React.FC = () => {
 
 
-    const [search, setSearch] = useState<string>('');
-    const [value, setValue] = useState<string>('');
-
-    const [countryList, setCountry] = useState<Country[]>([]);
-    useEffect(() => {
-
-        const loadCountries = async () => {
-
-            const res = await fetch("./data.json")
-            const data: Country[] = await res.json();
-            setCountry(data)
-
-        }
-
-        loadCountries();
-
-    }, [])
-
-    const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setSearch(e.target.value)
-    }
-
-    const filteredCountries = countryList.filter(
-        (country) =>
-            country.name.toLowerCase().includes(search.toLowerCase()) &&
-            country.region.toLowerCase().includes(value.toLowerCase())
-    );
-
-    const handleSelectValue = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        setValue(e.target.value)
-    }
+    const {filteredCountries,onChange,search,handleSelectValue,value,isDarkMode} = useAppContext();
 
     return (
         <>
 
-            <div className="input_container">
-                <div className="input-search">
+            <div className="input_container" >
+                <div className="input-search"       style={{ 
+        backgroundColor:isDarkMode ? "#2b3743" : "#fff",
+        color: isDarkMode ? "#fff" : "#000"
+      }} >
                     <InputSearch onChangeInput={onChange} search={search} />
                 </div>
 
                 <div className="option_select_input">
 
-                    <select className="select_input" value={value} onChange={handleSelectValue} >
+                    <select className="select_input" value={value} onChange={handleSelectValue}  
+                    style={{backgroundColor:isDarkMode ? "#2b3743" : "#fff",
+                    color: isDarkMode ? "#fff" : "#000"}}
+                    >
 
                         <option value="">Filter by Region</option>
                         <option value="Americas">America</option>
@@ -62,7 +39,10 @@ const CountryList: React.FC = () => {
 
             <div className="__container-card">
                 {filteredCountries.map((country) => (
-                    <CountryCard key={country.name} data={country} />
+                    
+                    <Link to={`/${country.name}`} key={country.name} style={{ textDecoration: 'none' }}>
+                        <CountryCard key={country.name} data={country} />
+                    </Link>
                 ))}
             </div>
         </>
