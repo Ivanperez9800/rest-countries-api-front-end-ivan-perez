@@ -16,7 +16,7 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
 
   useEffect(() => {
     const loadCountries = async () => {
-      const res = await fetch("./data.json")
+      const res = await fetch("/data.json")
       const data: Country[] = await res.json();
       setCountry(data)
     }
