@@ -6,6 +6,8 @@ const CountrieInfo: React.FC = () => {
   const { countrieId } = useParams<{ countrieId: string }>();
   const { countryList } = useAppContext();
 
+  const {isDarkMode} = useAppContext();
+
   // Usa `find` para obtener el país específico en lugar de `filter`
   const country = countryList.find((country) => country.name === countrieId);
 
@@ -21,13 +23,18 @@ const CountrieInfo: React.FC = () => {
 
   return (
 
-    <div className="container">
+    <div className="container" style={{ color: isDarkMode ? "#fff" : "#000" , backgroundColor:isDarkMode ? "#212f36" : "#fff",minHeight:"100vh"}}>
 
 
-      <button className='btn-back' >
-        <Link to="/">Back</Link>
+      <button className='btn-back'  style={{
+        backgroundColor:isDarkMode ? "#2b3743" : "#fff",borderColor:isDarkMode ? "#fff" : "#000",
+        // borderColor:isDarkMode ? "#fff" : "#000",
+        borderStyle:isDarkMode ? "solid" : "solid",
+        borderWidth:isDarkMode ? "1px" : "none"
+        }}  >
+        <Link to="/" style={{ color: isDarkMode ? "#fff" : "#000" }}  >Back</Link>
       </button>
-      <div className="container-card-info">
+      <div className="container-card-info" style={{ color: isDarkMode ? "#fff" : "#000" , backgroundColor:isDarkMode ? "#212f36" : "#fff"}} >
 
         {country ? (
           <>
@@ -74,7 +81,13 @@ const CountrieInfo: React.FC = () => {
                 <ul>
                   {borderCountries?.length ? (
                     borderCountries.map((borderName, index) => (
-                      <Link key={index} to={`/${borderName}`}>
+                      <Link key={index} to={`/${borderName}`} style={{ 
+                        color: isDarkMode ? "#fff" : "#000",
+                        backgroundColor:isDarkMode ? "#2b3743" : "#fff",
+                        borderColor:isDarkMode ? "#fff" : "#000",
+                        borderStyle:isDarkMode ? "solid" : "solid",
+                        borderWidth:isDarkMode ? "1px" : "none"
+                        }} >
                         <li key={index}>{borderName}</li>
                       </Link>
                     ))
